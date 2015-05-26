@@ -8,7 +8,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-    Lanzador lanzador(5,10,1000000);
+    Lanzador lanzador(5,10,1000000,6);
     lanzador.iniciarIPC();
     lanzador.lanzarPuertas();
 
@@ -16,7 +16,7 @@ int main(int argc, char* argv[]){
 
     Admin a;
     while(!salir){
-        char* mess = "Admin: q a c";
+        char* mess = "Admin: q a c \n";
         write(STDOUT_FILENO,mess, strlen(mess));
         std::string entrada;
         std::cin >> entrada;
@@ -28,6 +28,7 @@ int main(int argc, char* argv[]){
             a.cerrarMuseo();
         }
     }
+    lanzador.removeIPC();
 
     return 0;
 }

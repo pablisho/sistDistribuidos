@@ -29,10 +29,11 @@ class Lanzador {
         SemaforoBinario* mutex;
 
     public:
-        Lanzador(int cantPuertas, int cantPersonas,int tiempoMedia);
+        Lanzador(int cantPuertas, int cantPersonas,int tiempoMedia, int capMaxima);
         virtual ~Lanzador();
         void iniciarIPC();
         void lanzarPuertas();
+        void removeIPC();
 };
 
 #endif // LANZADOR_H_INCLUDED

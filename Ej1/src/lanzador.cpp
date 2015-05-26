@@ -42,7 +42,7 @@ void Lanzador::iniciarIPC(){
     write(STDOUT_FILENO,mess, strlen(mess));
     shmem->abierto = false;
     shmem->personasAdentro = 0;
-    shmem->capMaxima = this->capMaxima;
+    shmem->maxPersonas = this->capMaxima;
 
 }
 
@@ -61,5 +61,13 @@ void Lanzador::lanzarPuertas(){
         sprintf(mess,"Lanzada la puerta %d \n",i);
         write(STDOUT_FILENO,mess, strlen(mess));
     }
+}
+
+void Lanzador::removeIPC(){
+    int shmid;
+    key_t claveShm = ftok(DIRECTORIO,SHM);
+    shmid = shmget(claveShm,sizeof(Museo),0660);
+    shmctl(shmid,IPC_RMID,(struct shmid_ds*)0);
+    this->mutex->eliminar();
 }
 

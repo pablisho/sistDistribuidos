@@ -18,7 +18,7 @@ Puerta::Puerta(int nroPuerta, int cantPersonas, int mediaTiempo){
     this->cantPersonas = cantPersonas;
     this->mediaTiempo = mediaTiempo;
     this->nroPuerta = nroPuerta;
-    srand(time(NULL));
+    srand(time(NULL) + nroPuerta);
 }
 
 Puerta::~Puerta(){
@@ -28,7 +28,7 @@ Puerta::~Puerta(){
 bool Puerta::ponerPersona(){
     char mess[100];
     Lock l(mutex);
-    sprintf(mess, "Obtenido el semaforo por la puerta %d \n", this->nroPuerta);
+    sprintf(mess, "Paso el semaforo la puerta %d \n", this->nroPuerta);
     write(STDOUT_FILENO,mess, strlen(mess));
     if(shmem->abierto){
         sprintf(mess, "Mueseo Abierto - puerta %d \n", this->nroPuerta);
@@ -51,7 +51,7 @@ bool Puerta::ponerPersona(){
 bool Puerta::sacarPersona(){
     char mess[100];
     Lock l(mutex);
-    sprintf(mess, "Obtenido el semaforo por la puerta %d \n", this->nroPuerta);
+    sprintf(mess, "Paso el semaforo la puerta %d \n", this->nroPuerta);
     write(STDOUT_FILENO,mess, strlen(mess));
     if(shmem->abierto){
         sprintf(mess, "Mueseo Abierto - puerta %d \n", this->nroPuerta);
@@ -62,12 +62,19 @@ bool Puerta::sacarPersona(){
             shmem->personasAdentro--;
             sprintf(mess, "Hay %d personas \n", shmem->personasAdentro);
             write(STDOUT_FILENO,mess, strlen(mess));
-            return true;
+        }else{
+            sprintf(mess, "No habia personas, no tiene sentido sacar \n", shmem->personasAdentro);
+            write(STDOUT_FILENO,mess, strlen(mess));
         }
     }else{
-        sprintf(mess, "Mueseo Cerrado, todas las personas salen por la puerta %d \n", this->nroPuerta);
+        sprintf(mess, "Mueseo Cerrado. Si hay personas las saco.", this->nroPuerta);
         write(STDOUT_FILENO,mess, strlen(mess));
+        if(shmem->personasAdentro){
+            sprintf(mess, "%d personas salen por la puerta %d.", shmem->personasAdentro,this->nroPuerta);
+            write(STDOUT_FILENO,mess, strlen(mess));
+        }
         shmem->personasAdentro = 0;
+        return true;
     }
     return false;
 }
@@ -115,7 +122,10 @@ void Puerta::run(){
         }else{
             //sprintf(mess,"La persona intenta salir por la puerta %d \n",this->nroPuerta);
             //write(STDOUT_FILENO,mess, strlen(mess));
-            sacarPersona();
+            bool cerrado = sacarPersona();
+            if (cerrado){
+                break;
+            }
         }
     }
 }

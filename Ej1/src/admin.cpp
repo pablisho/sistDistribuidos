@@ -35,7 +35,7 @@ void Admin::getIPC(){
         perror("Lanzador: Error al attachear la shared memory");
         exit(1);
     }
-    sprintf(mess, "Obtenida la shared mem por el admin");
+    sprintf(mess, "Obtenida la shared mem por el admin \n");
     write(STDOUT_FILENO,mess, strlen(mess));
 }
 
