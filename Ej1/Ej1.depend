@@ -1,0 +1,46 @@
+# depslib dependency file v1.0
+1432445200 source:/home/pablo/distribuidos/Ej1/main.cpp
+	<iostream>
+
+1432450934 source:/home/pablo/distribuidos/Ej1/lanzador.cpp
+	"lanzador.h"
+	"museo.h"
+	"processManager.h"
+	<sys/ipc.h>
+	<sys/shm.h>
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+
+1432450929 /home/pablo/distribuidos/Ej1/lanzador.h
+	"museo.h"
+	"semaforoBinario.h"
+	<vector>
+	<sys/types.h>
+
+1432447827 /home/pablo/distribuidos/Ej1/museo.h
+
+1432448525 /home/pablo/distribuidos/Ej1/semaforoBinario.h
+
+1432448945 source:/home/pablo/distribuidos/Ej1/semaforoBinario.cpp
+	"semaforoBinario.h"
+	<sys/ipc.h>
+	<sys/sem.h>
+	<sys/types.h>
+
+1432449502 source:/home/pablo/distribuidos/Ej1/processManager.cpp
+	"processManager.h"
+	<iostream>
+
+1432449427 /home/pablo/distribuidos/Ej1/processManager.h
+	<unistd.h>
+	<stdlib.h>
+	<errno.h>
+	<string>
+	<string.h>
+	<sys/types.h>
+	<sys/wait.h>
+
+1432450855 source:/home/pablo/distribuidos/Ej1/puerta.cpp
+
